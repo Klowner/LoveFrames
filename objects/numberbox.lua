@@ -74,9 +74,9 @@ function newobject:initialize()
 		end
 	end
 	increasebutton.Update = function(object)
-		local loveversion = love._version
+		local loveversion = loveframes.sweetdiversion
 		local time = 0
-		if loveversion == "0.8.0" then
+		if loveversion("<0.9.0") then
 			time = love.timer.getMicroTime()
 		else
 			time = love.timer.getTime()
@@ -114,9 +114,9 @@ function newobject:initialize()
 		end
 	end
 	decreasesbutton.Update = function(object)
-		local loveversion = love._version
+		local loveversion = loveframes.sweetdiversion
 		local time = 0
-		if loveversion == "0.8.0" then
+		if loveversion("<0.9.0") then
 			time = love.timer.getMicroTime()
 		else
 			time = love.timer.getTime()

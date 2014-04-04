@@ -116,7 +116,7 @@ function newobject:update(dt)
 	local internals = self.internals
 	local repeatrate = self.repeatrate
 	local hover = self.hover
-	local version = love._version
+	local version = loveframes.sweetdiversion
 	
 	-- move to parent if there is a parent
 	if parent ~= base then
@@ -294,7 +294,7 @@ function newobject:draw()
 	local skinindex = loveframes.config["ACTIVESKIN"]
 	local defaultskin = loveframes.config["DEFAULTSKIN"]
 	local stencilfunc = function() love.graphics.rectangle("fill", x, y, width, height) end
-	local loveversion = love._version
+	local loveversion = loveframes.sweetdiversion
 	local selfskin = self.skin
 	local skin = skins[selfskin] or skins[skinindex]
 	local drawfunc = skin.DrawTextInput or skins[defaultskin].DrawTextInput
@@ -312,7 +312,7 @@ function newobject:draw()
 		stencilfunc = function() love.graphics.rectangle("fill", x, y, width - 16, height - 16) end
 	end
 	
-	if loveversion == "0.8.0" then
+	if loveversion("<0.9.0") then
 		local stencil = love.graphics.newStencil(stencilfunc)
 		love.graphics.setStencil(stencil)
 	else
@@ -477,7 +477,7 @@ function newobject:keypressed(key, unicode)
 	local repeatdelay = self.repeatdelay
 	local alltextselected = self.alltextselected
 	local editable = self.editable
-	local version = love._version
+	local version = loveframes.sweetdiversion
 	
 	self.delay = time + repeatdelay
 	self.keydown = key
@@ -485,14 +485,14 @@ function newobject:keypressed(key, unicode)
 	if (loveframes.util.IsCtrlDown()) and focus then
 		if key == "a" then
 			self.alltextselected = true
-		elseif key == "c" and alltextselected and version == "0.9.0" then
+		elseif key == "c" and alltextselected and version(">0.8.0") then
 			local text = self:GetText()
 			local oncopy = self.OnCopy
 			love.system.setClipboardText(text)
 			if oncopy then
 				oncopy(self, text)
 			end
-		elseif key == "x" and alltextselected and version == "0.9.0" and editable then
+		elseif key == "x" and alltextselected and version(">0.8.0") and editable then
 			local text = self:GetText()
 			local oncut = self.OnCut
 			love.system.setClipboardText(text)
@@ -501,12 +501,12 @@ function newobject:keypressed(key, unicode)
 			else
 				self:SetText("")
 			end
-		elseif key == "v" and version == "0.9.0" and editable then
+		elseif key == "v" and version(">0.8.0") and editable then
 			self:Paste()
 		end
 	else
-		local version = love._version
-		if version == "0.8.0" then
+		local version = loveframes.sweetdiversion
+		if version("<0.9.0") then
 			self:RunKey(key, unicode, true)
 		else
 			self:RunKey(key, unicode, false)
@@ -857,7 +857,7 @@ function newobject:RunKey(key, unicode, is_text)
 		end
 	end
 	
-	if love._version == "0.9.0" then
+	if loveframes.sweetdiversion(">0.8.0") then
 		self.unicode = 0
 	end
 	
@@ -1833,9 +1833,9 @@ end
 --]]---------------------------------------------------------
 function newobject:Copy()
 
-	local version = love._version
+	local version = loveframes.sweetdiversion
 	
-	if version == "0.9.0" then
+	if version(">0.8.0") then
 		local text = self:GetText()
 		love.system.setClipboardText(text)
 	end
