@@ -133,7 +133,7 @@ function newobject:draw()
 	local width = self.width
 	local height = self.height
 	local stencilfunc = function() love.graphics.rectangle("fill", x, y, width, height) end
-	local LoveVersionIs = loveframes.loveversion.LoveVersionIs
+	local loveversion = love._version
 	local internals = self.internals
 	local children = self.children
 	local skins = loveframes.skins.available
@@ -155,7 +155,7 @@ function newobject:draw()
 		drawfunc(self)
 	end
 	
-	if LoveVersionIs("0.8.*") then
+	if loveversion == "0.8.0" then
 		local stencil = love.graphics.newStencil(stencilfunc)
 		love.graphics.setStencil(stencil)
 	else

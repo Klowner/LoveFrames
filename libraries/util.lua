@@ -136,13 +136,13 @@ end
 --]]---------------------------------------------------------
 function loveframes.util.GetDirectoryContents(dir, t)
 
-	local LoveVersionIs = loveframes.loveversion.LoveVersionIs
+	local version = love._version
 	local dir = dir
 	local t = t or {}
 	local dirs = {}
 	local files
 	
-	if LoveVersionIs("0.9.*") then
+	if version == "0.9.0" then
 		files = love.filesystem.getDirectoryItems(dir)
 	else
 		files = love.filesystem.enumerate(dir)

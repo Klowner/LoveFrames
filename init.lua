@@ -44,16 +44,15 @@ loveframes.collisions = {}
 	- desc: loads the library
 --]]---------------------------------------------------------
 function loveframes.load()
-	-- install directory of the library
-	local dir = loveframes.config["DIRECTORY"] or path
 	
-	-- load love version checker helpers
-	require(dir .. ".libraries.loveversion")
+	local loveversion = love._version
 	
-	local LoveVersionIs = loveframes.loveversion.LoveVersionIs
-	if (not LoveVersionIs("0.8.*")) and (not LoveVersionIs("0.9.*")) then
+	if loveversion ~= "0.8.0" and loveversion ~= "0.9.0" then
 		error("Love Frames is not compatible with your version of LOVE.")
 	end
+	
+	-- install directory of the library
+	local dir = loveframes.config["DIRECTORY"] or path
 	
 	-- require the internal base libraries
 	loveframes.class = require(dir .. ".third-party.middleclass")
@@ -106,7 +105,7 @@ function loveframes.update(dt)
 
 	local base = loveframes.base
 	local input_cursor_set = loveframes.input_cursor_set
-	local LoveVersionIs = loveframes.loveversion.LoveVersionIs
+	local version = love._version
 	
 	loveframes.collisioncount = 0
 	loveframes.objectcount = 0
@@ -125,7 +124,7 @@ function loveframes.update(dt)
 		end
 	end
 	
-	if LoveVersionIs("0.9.*") then
+	if version == "0.9.0" then
 		local hoverobject = loveframes.hoverobject
 		local arrow = love.mouse.getSystemCursor("arrow")
 		local curcursor = love.mouse.getCursor()
